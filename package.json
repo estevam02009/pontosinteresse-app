@@ -1,0 +1,29 @@
+{
+  "name": "pontosinteresse-app",
+  "version": "1.0.0",
+  "description": "App para estudos de nodeJS, express, Geolocation e bootstrap",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon appljs",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/estevam02009/pontosinteresse-app.git"
+  },
+  "author": "Manoel Estevam Neto",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/estevam02009/pontosinteresse-app/issues"
+  },
+  "homepage": "https://github.com/estevam02009/pontosinteresse-app#readme",
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "ejs": "^3.1.8",
+    "express": "^4.18.1",
+    "mongoose": "^6.3.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.16"
+  }
+}
