@@ -30,22 +30,22 @@ module.exports.details = (req, res, next) => {
 
 // TODO: adicionar novo ponto de interesse
 exports.create = function(req, res, next) {
-    // inicializar variáveis com os valores do req.body
-    let nm = req.body.name
-    let dt = req.body.details
-    let lng = req.body.lng
-    let lat = req.body.lat
+    // // inicializar variáveis com os valores do req.body
+    // let nm = req.body.name
+    // let dt = req.body.details
+    // let lng = req.body.lng
+    // let lat = req.body.lat
 
-    // criar variavel baseada no modelo 'PImodel' para receber dados do formulário (request)
-    let data = {
-        name: nm,
-        details: dt,
-        status: true,
-        geometry: {
-            "type": "point",
-            "coordinates": [lng, lat]
-        }
-    }
+    // // criar variavel baseada no modelo 'PImodel' para receber dados do formulário (request)
+    // let data = {
+    //     name: nm,
+    //     details: dt,
+    //     status: true,
+    //     geometry: {
+    //         "type": "point",
+    //         "coordinates": [lng, lat]
+    //     }
+    // }
     // cria novo ‘pi’ na BD a partir do request, depois, devolve o
     //‘pi’ criado ao cliente
     PI.create(data).then(function(pi){
@@ -82,8 +82,8 @@ exports.update = function(req, res, next) {
 // ‘req.params.id’->devolve-me o parametro id na req
 exports.delete = function(req, res, next) {
     // apaga ‘pi’ da BD, depois, devolve o ‘pi’ apagado ao cliente
-    PI.findByIdAndRemove({ _id: req.params.id }).then(function(pi){
-        res.send(pi)
+    PI.findByIdAndDelete({ _id: req.params.id }).then(function(pi){
+        res.redirect('/api/listall')
     }).catch(next)
     // res.send({type: 'DELETE'})
 }

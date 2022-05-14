@@ -13,8 +13,8 @@
     <form action="/api/interest" method="post">
         <input type="text" placeholder="name" name="name">
         <input type="text" placeholder="details" name="details">
-        <input type="text" placeholder="longitude" name="lng">
-        <input type="text" placeholder="latitude" name="lat">
+        <input type="text" placeholder="longitude" name="geometry.coordinates[0]">
+        <input type="text" placeholder="latitude" name="geometry.coordinates[1]">
         <button type="submit">Submit</button>
     </form>
 </body>

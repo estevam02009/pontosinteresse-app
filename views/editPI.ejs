@@ -13,6 +13,8 @@
         <input type="text" value="<%= pi.name %>" name="name">
         <input type="text" value="<%= pi.details %>" name="details">
         <input type="text" value="<%= pi.status %>" name="status">
+        <input type="text" value="<%= pi.geometry.coordinates[0] %>" name="geometry.coordinates[0]">
+        <input type="text" value="<%= pi.geometry.coordinates[1] %>" name="geometry.coordinates[1]">
         <br>
         <button><a href="/api/listall">Listar</a></button>
         <button type="submit">Editar</button>
