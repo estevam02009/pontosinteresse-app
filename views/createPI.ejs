@@ -8,14 +8,74 @@
     <link rel="stylesheet" href="/assets/css/main.css">
 </head>
 <body>
-    <h1>Criar ponto de interesse</h1>
-    <%# "/api/interest"-> rota de criação de novo registo %>
-    <form action="/api/interest" method="post">
-        <input type="text" placeholder="name" name="name">
-        <input type="text" placeholder="details" name="details">
-        <input type="text" placeholder="longitude" name="geometry.coordinates[0]">
-        <input type="text" placeholder="latitude" name="geometry.coordinates[1]">
-        <button type="submit">Submit</button>
+    <h2>Criar ponto de interesse</h2>
+    <button><a href="/api/listall">Listar</a></button>
+    <button><a onclick="onNearClk('/api/details/')" href="#">Aproximar</a></button>
+    <%# "/api/create"-> rota de criação de novo registo %>
+    <form id="frm" action="/api/create" method="post">
+        <input type="text" placeholder="name" value="MeuPI" name="name">
+        <input type="text" placeholder="details" value="Detalhes" name="details">
+        <input id="input_lng" type="text" placeholder="longitude" name="geometry.coordinates[0]">
+        <input id="input_lat" type="text" placeholder="latitude" name="geometry.coordinates[1]">
+        <input type="button" onclick="onSubmitClk()" value="Submit">
     </form>
+
+    <%# elemento onde vai ser renderizado a msg erro %>
+    <div id="map"></div>
+
+    <script>
+        function setLngLat(lng, lat) {
+            // passa os valores de longitude e latitude nos inputs com
+            // ids:'input_lng' e 'input_lat'
+            document.getElementById('input_lng').setAttribute('value', lng)
+            document.getElementById('input_lat').setAttribute('value', lat)
+            // Faz a submissão do formulário de id="frm"
+            document.getElementById("frm").submit()
+        }
+
+        function getGeoPos(callback) {
+            // paramentro para 'getCurrentPosition()'
+            function local(position) {
+                var lng = position.coords.longitude
+                var lat = position.coords.latitude
+                // Verifica se a função é de callback
+                if (typeof callback === 'function') {
+                    callback(lng, lat)
+                }
+            }
+            // chamada á API-HTML_Geolocation que devolve a posição da maquina
+            navigator.geolocation.getCurrentPosition(local)
+        }
+
+        function onSubmitClk() {
+            getGeoPos(setLngLat)
+        }
+
+        // Obter latitude e longitude para query-string da rota:"/api/details/?lng=lng&lat=lat"
+        function onNearClk(url) {
+            // 'getElementById('map')'->referencia elemento onde vai
+            // renderizar a mensagem
+            var output = document.getElementById('map')
+
+            // Verificar se o navegador suporta geolocalização
+            if (!navigator.geolocation) {
+                output.innerHTML = "<p>Seu navegador atual não suporta geolocalização</p>"
+            } else {
+                // patamentro para getCurrentPosition()
+                function local(position) {
+                    const lat = position.coords.latitude
+                    const lng = position.coords.longitude
+                    location.href = url + '?lng=' + lng + '&' + 'lat=' + lat
+                }
+                // patamentro para getCurrentPosition()
+                function error() {
+                    output.innerHTML = "<p>Não foi possível encontrar sua localização</p>"
+                }
+                // chamada á API-HTML_Geolocation que devolve a posição do
+                // dispositivo
+                navigator.geolocation.getCurrentPosition(local, error)
+            }
+        }
+    </script>
 </body>
 </html>

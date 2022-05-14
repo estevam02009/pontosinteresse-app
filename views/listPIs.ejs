@@ -9,6 +9,10 @@
 </head>
 <body>
     <h2>Lista de Pontos de Interesse</h2>
+
+
+    <button><a href="/">Voltar</a></button>
+    <button><a onclick="onNearClk('/api/details/')" href=#>Aproximar</a></button>
     <table border="1">
         <thead>
             <tr>
@@ -36,14 +40,39 @@
             <% }) %>
         </tbody>
     </table>
-    <button><a href="/">Voltar</a></button>
 
     <script>
-        function confirmation(msg, url) {
+        function deleteDoc(msg, url) {
             if (confirm(msg)) {
                 window.location.href = url
             } else {
                 false
+            }
+        }
+
+        // Obter latitude e longitude para query-string da rota:"/api/details/?lng=lng&lat=lat"
+        function onNearClk(url) {
+            // 'getElementById('map')'->referencia elemento onde vai
+            // renderizar a mensagem
+            var output = document.getElementById('map')
+
+            // Verificar se o navegador suporta geolocalização
+            if (!navigator.geolocation) {
+                output.innerHTML = "<p>Seu navegador atual não suporta geolocalização</p>"
+            } else {
+                // patamentro para getCurrentPosition()
+                function local(position) {
+                    const lat = position.coords.latitude
+                    const lng = position.coords.longitude
+                    location.href = url+'?lng='+lng+'&'+'lat='+lat
+                }
+                // patamentro para getCurrentPosition()
+                function error() {
+                    output.innerHTML = "<p>Não foi possível encontrar sua localização</p>"
+                }
+                // chamada á API-HTML_Geolocation que devolve a posição do
+                // dispositivo
+                navigator.geolocation.getCurrentPosition(local, error)
             }
         }
     </script>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes</title>
+    <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+
+<body>
+    <h2>Detalhes</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <td>Nome</td>
+                <td>Detalhes</td>
+                <td>Status</td>
+                <td>Lng</td>
+                <td>Lat</td>
+                <td>Ações</td>
+                <td>Localização</td>
+            </tr>
+        </thead>
+        <tbody>
+            <% pis.forEach(function(data) { %>
+                <tr>
+                    <td>
+                        <%= data.name %>
+                    </td>
+                    <td>
+                        <%= data.details %>
+                    </td>
+                    <td>
+                        <%= data.status %>
+                    </td>
+                    <td>
+                        <%= data.geometry.coordinates[0] %>
+                    </td>
+                    <td>
+                        <%= data.geometry.coordinates[1] %>
+                    </td>
+                    <td>
+                        <a href="/api/edit/<%= data._id %>">Editar</a>
+                    </td>
+                    <td>
+                        <a onclick="onShowMapClk('<%= data.geometry.coordinates[0]%>',
+                            '<%= data.geometry.coordinates[1] %>', '<%= data.name %>')" href=#>
+                            Show Mapa
+                        </a>
+                    </td>
+                </tr>
+                <% }) %>
+        </tbody>
+    </table>
+    <button><a href="/">Voltar</a></button>
+    <%# tag que vai receber o nome do PI ao clicar 'Show map' %>
+    <p id="name"></p>
+    <%# elemento onde vai ser renderizado o mapa %>
+    <div id="map"></div>
+
+    <%# referenciar API-GOOGLE_STATIC_MAP %>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPDDpEQ7NKPpwXf1sTTHJsCHcGVxkpWSk"></script>
+    <script>
+        function onShowMapClk(lng, lat, name) {
+            // 'getElementById('map')'->referencia elemento onde vai
+            // renderizar o mapa
+            var outMap = document.getElementById('map')
+            var outName = document.getElementById('name')
+
+            // guardar imagem a partir da chamada à API_GOOGLE_MAP
+            var imgURL = "https://maps.googleapis.com/maps/api/staticmap?center="+lat+","+lng+"&size=600x300&markers=color:red%7C"+lat+","+lng+"&key=AIzaSyBPDDpEQ7NKPpwXf1sTTHJsCHcGVxkpWSk"
+
+            // renderizar o mapa
+            outMap.innerHTML = "<img src='"+imgURL+"'>"
+            // passar o nome do PI
+            outName.innerHTML = name
+        }
+    </script>
+</body>
+
+</html>

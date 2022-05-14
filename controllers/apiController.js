@@ -24,7 +24,7 @@ module.exports.details = (req, res, next) => {
             "maxDistance": maxDist
         }
     }])
-        .then(pi => res.render('listPIs', {pis: pi}))
+        .then(pi => res.render('details', {pis: pi}))
         .catch(next)
 }
 
@@ -48,7 +48,7 @@ exports.create = function(req, res, next) {
     // }
     // cria novo ‘pi’ na BD a partir do request, depois, devolve o
     //‘pi’ criado ao cliente
-    PI.create(data).then(function(pi){
+    PI.create(req.body).then(function(pi){
         console.log('Documento criado com sucesso!')
         res.redirect('/api/listall')
     }).catch(next)
