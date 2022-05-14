@@ -24,13 +24,17 @@ mongoose.connection.on('error', (err) => {
     console.log('Database error ' + err)
 })
 
-// MIDDLEWARE ==========================================
-// este middlaware deve estar acima das routes-handlers!
-app.use(bodyParser.json())
+app.set('view engine', 'ejs')
 
-// END POINT INVÁLIDO
+// MIDDLEWARE ==========================================
+app.use(express.static('./public'))
+// este middlaware deve estar acima das routes-handlers!
+// app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
+
+// Rota raiz onde o criamos nossos PIs
 app.get('/', function(req, res) {
-    res.send('END POINT INVÁLIDO')
+    res.render('createPI')
 })
 
 // todo o url começado por ‘/api’ chama as rotas em ‘./routes/api’
